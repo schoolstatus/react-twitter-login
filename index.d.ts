@@ -18,6 +18,11 @@ interface TwitterLoginProps {
    */
   authCallback: (error?: any, result?: any) => void;
 
+    /**
+   * Callback function which generates the signature so secret can stay hidden
+   */
+  signatureGenerator: any;
+
   /**
    * The redirect URI of the application, this should be same as the value in the application registration portal.
    */
