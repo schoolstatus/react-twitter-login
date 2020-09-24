@@ -9,7 +9,7 @@ interface RequestTokenResponse {
   oauth_callback_confirmed?: string;
 }
 
-const parseOAuthRequestToken = (responseText: string) =>
+export const parseOAuthRequestToken = (responseText: string) =>
   responseText.split("&").reduce((prev, el) => {
     const [key, value] = el.split("=");
     return { ...prev, [key]: value };

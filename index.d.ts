@@ -18,6 +18,11 @@ interface TwitterLoginProps {
    */
   authCallback: (error?: any, result?: any) => void;
 
+    /**
+   * A Token that was fetch somewhere else
+   */
+  token: any;
+
   /**
    * DEPRECATED
    * "callbackUrl" is not supported from version 1.2.0 and higher. It's hardcoded inside the package with "window.location.href". More details: https://github.com/alexandrtovmach/react-twitter-login/issues/8
