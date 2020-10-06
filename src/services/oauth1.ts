@@ -1,4 +1,8 @@
-import { requestTokenSignature, accessTokenSignature } from "./signature";
+import {
+  requestTokenSignature,
+  accessTokenSignature,
+  parseParams
+} from "./signature";
 
 const proxyUrl =
   process.env.PROXY_URL || "https://cors-anywhere.herokuapp.com/";
@@ -20,21 +24,26 @@ export const obtainOauthRequestToken = async ({
   consumerSecret,
   callbackUrl,
   method,
-  apiUrl
+  apiUrl,
+  token
 }: {
   method: string;
   apiUrl: string;
   callbackUrl: string;
   consumerKey: string;
   consumerSecret: string;
+  token: object;
 }) => {
-  const oauthSignature = requestTokenSignature({
-    method,
-    apiUrl,
-    callbackUrl,
-    consumerKey,
-    consumerSecret
-  });
+  const oauthSignature = token
+    ? parseParams({ ...token, oauth_version: "1.0" })
+    : requestTokenSignature({
+        method,
+        apiUrl,
+        callbackUrl,
+        consumerKey,
+        consumerSecret
+      });
+
   const res = await fetch(`${proxyUrl}${apiUrl}`, {
     method,
     headers: {

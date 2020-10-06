@@ -81,12 +81,12 @@ export default class TwitterLoginComponent extends React.Component<
       callbackUrl: window.location.href,
       consumerKey,
       consumerSecret,
-      method: "POST"
+      method: "POST",
+      token
     };
-    const requestTokenData = token.signature
-      ? { ...token }
-      : await obtainOauthRequestToken(obtainRequestTokenConfig);
-    console.log("requestTokenData", requestTokenData);
+    const requestTokenData = await obtainOauthRequestToken(
+      obtainRequestTokenConfig
+    );
     if (requestTokenData.oauth_callback_confirmed === "true") {
       const popup = openWindow({
         url: `https://api.twitter.com/oauth/authorize?oauth_token=${requestTokenData.oauth_token}`,

@@ -59,6 +59,15 @@ export const accessTokenSignature = ({
   return makeSignature(params, method, apiUrl, consumerSecret);
 };
 
+export const parseParams = (params: any) => {
+  return Object.keys(params)
+    .sort()
+    .reduce((prev: string, el: any) => {
+      return (prev += `,${el}="${params[el]}"`);
+    }, "")
+    .substr(1);
+};
+
 const makeSignature = (
   params: any,
   method: string,
@@ -87,10 +96,5 @@ const makeSignature = (
     oauth_signature: encodeURIComponent(oauth_signature)
   };
 
-  return Object.keys(paramsWithSignature)
-    .sort()
-    .reduce((prev: string, el: any) => {
-      return (prev += `,${el}="${paramsWithSignature[el]}"`);
-    }, "")
-    .substr(1);
+  return parseParams(paramsWithSignature);
 };
